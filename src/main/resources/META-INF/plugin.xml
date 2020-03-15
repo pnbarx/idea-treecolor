@@ -1,0 +1,147 @@
+<!--
+  ~ Copyright (c) 2018-2020 Pavel Barykin.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+<idea-plugin>
+    <id>dev.pnbarx.idea.treecolor</id>
+    <name>ProjectTree Color Highlighter</name>
+    <version>@version@</version>
+    <vendor url="https://github.com/pnbarx">Pavel Barykin</vendor>
+
+    <description><![CDATA[
+        Highlights your project files and folders in colors.
+        <br/>
+        <br/>
+
+        <img src="https://raw.githubusercontent.com/pnbarx/idea-treecolor/master/images/highlight-menu.png" alt="Highlight menu">
+
+        <br/>
+        <br/>
+
+        When you are working on a large complex project you may need to highlight
+        some of its parts in different colors.
+        <br>
+        <br>
+        Previously, there was only one way to do this:
+        create a scope, specify its name and filename pattern, then add a color
+        and attach it to the created scope, then click <code>Ok</code> and <code>Apply</code>
+        to see how it looks now. If the color doesn't fit, double-click it, select a new color,
+        click <code>OK</code> and <code>Apply</code> again to see the changes. If the color
+        doesn't fit again - repeat until it fits.
+        This is a rather inconvenient way (and takes a lot of time).
+
+        <br/>
+        <br/>
+
+        <strong>ProjectTree Color Highlighter</strong> was made to get rid of this inconvenience.
+        Highlight your files and folders with ease using the context menu. Adjust the colors
+        using the color picker, get an instant preview of the project tree and editor tabs
+        while adjusting.
+
+        <br/>
+        <br/>
+
+        <img src="https://raw.githubusercontent.com/pnbarx/idea-treecolor/master/images/color-adjustment.gif" alt="Color adjustment">
+
+        <br/>
+        <br/>
+
+        All settings are persistently stored in the <code><nobr>.idea/highlightedFiles.xml</nobr></code>,
+        so you can read and change it externally, clone or copy-paste to other projects, etc.
+        (This allows you to create various project boilerplates with predefined highlighting settings.)
+
+        <br/>
+        <br/>
+
+        <img src="https://raw.githubusercontent.com/pnbarx/idea-treecolor/master/images/config-file.png" alt="Config file">
+
+        <br/>
+        <br/>
+        <br/>
+
+        Enjoy and write a lot of awesome code!
+        <br/>
+        <br/>
+
+
+    ]]></description>
+
+    <!--suppress PluginXmlValidity -->
+    <change-notes><![CDATA[
+        <ul>
+            <li>
+                1.1.0 Initial public release
+            </li>
+        </ul>
+    ]]></change-notes>
+
+    <depends>com.intellij.modules.platform</depends>
+    <idea-version since-build="183"/>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <editorTabColorProvider implementation="dev.pnbarx.idea.treecolor.providers.ColorProvider"/>
+        <projectService serviceImplementation="dev.pnbarx.idea.treecolor.state.ProjectState"/>
+    </extensions>
+
+    <actions>
+        <group id="dev.pnbarx.idea.treecolor" text="Highlight"
+               description="Highlight your project files and folders"
+               icon="/icons/highlight.png" popup="true">
+            <action id="highlight0"
+                    class="dev.pnbarx.idea.treecolor.actions.HighlightAction"
+                    text="Color 1" description="Highlight in color #1"/>
+            <action id="highlight1" class="dev.pnbarx.idea.treecolor.actions.HighlightAction"
+                    text="Color 2" description="Highlight in color #2"/>
+            <action id="highlight2" class="dev.pnbarx.idea.treecolor.actions.HighlightAction"
+                    text="Color 3" description="Highlight in color #3"/>
+            <action id="highlight3" class="dev.pnbarx.idea.treecolor.actions.HighlightAction"
+                    text="Color 4" description="Highlight in color #4"/>
+            <action id="highlight4" class="dev.pnbarx.idea.treecolor.actions.HighlightAction"
+                    text="Color 5" description="Highlight in color #5"/>
+            <action id="highlight5" class="dev.pnbarx.idea.treecolor.actions.HighlightAction"
+                    text="Color 6" description="Highlight in color #6"/>
+            <action id="highlight6" class="dev.pnbarx.idea.treecolor.actions.HighlightAction"
+                    text="Color 7" description="Highlight in color #7"/>
+            <action id="highlight7" class="dev.pnbarx.idea.treecolor.actions.HighlightAction"
+                    text="Color 8" description="Highlight in color #8"/>
+            <action id="highlight8" class="dev.pnbarx.idea.treecolor.actions.HighlightAction"
+                    text="Color 9" description="Highlight in color #9"/>
+            <action id="highlight9" class="dev.pnbarx.idea.treecolor.actions.HighlightAction"
+                    text="Color 10" description="Highlight in color #10"/>
+            <action id="highlight10" class="dev.pnbarx.idea.treecolor.actions.HighlightAction"
+                    text="Color 11" description="Highlight in color #11"/>
+            <action id="highlight11" class="dev.pnbarx.idea.treecolor.actions.HighlightAction"
+                    text="Color 12" description="Highlight in color #12"/>
+            <action id="highlight12" class="dev.pnbarx.idea.treecolor.actions.HighlightAction"
+                    text="Color 13" description="Highlight in color #13"/>
+            <action id="highlight13" class="dev.pnbarx.idea.treecolor.actions.HighlightAction"
+                    text="Color 14" description="Highlight in color #14"/>
+            <action id="highlight14" class="dev.pnbarx.idea.treecolor.actions.HighlightAction"
+                    text="Color 15" description="Highlight in color #15"/>
+            <action id="highlight15" class="dev.pnbarx.idea.treecolor.actions.HighlightAction"
+                    text="Color 16" description="Highlight in color #16"/>
+            <separator/>
+            <action id="clear" class="dev.pnbarx.idea.treecolor.actions.ClearAction" text="Clear"
+                    description="Remove highlighting"/>
+            <action id="clearRecursive" class="dev.pnbarx.idea.treecolor.actions.ClearAction" text="Clear Recursive"
+                    description="Remove highlighting recursively"/>
+            <separator/>
+            <action class="dev.pnbarx.idea.treecolor.actions.DefineColorsAction" text="Define Colors..."
+                    icon="/icons/colors.svg" description="Define highlight colors"/>
+            <add-to-group group-id="ProjectViewPopupMenuModifyGroup" anchor="last"/>
+        </group>
+    </actions>
+
+</idea-plugin>
