@@ -52,8 +52,4 @@ public class ClearAction extends AbstractAction {
         }
     }
 
-    private boolean isRecursive(AnActionEvent actionEvent) {
-        return getId(actionEvent).equals("clearRecursive");
-    }
-
 }
