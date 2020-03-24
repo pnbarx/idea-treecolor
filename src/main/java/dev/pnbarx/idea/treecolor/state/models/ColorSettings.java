@@ -62,6 +62,17 @@ public class ColorSettings implements Cloneable {
         return this._name;
     }
 
+    @Transient
+    public String getSafeName(int maxLength) {
+        String safeName = this._name.trim();
+        if(safeName.equals("")) {
+            safeName = " ";
+        } else if(safeName.length() > maxLength) {
+            safeName = safeName.substring(0, maxLength) + "...";
+        }
+        return safeName;
+    }
+
     public void setName(String name) {
         this._name = name;
     }
