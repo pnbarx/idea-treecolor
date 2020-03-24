@@ -16,6 +16,7 @@
 
 package dev.pnbarx.idea.treecolor.actions;
 
+import com.intellij.openapi.util.IconLoader;
 import dev.pnbarx.idea.treecolor.ui.views.ColorsDialog;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
@@ -24,6 +25,14 @@ import org.jetbrains.annotations.NotNull;
 
 
 public class DefineColorsAction extends AnAction {
+
+    public DefineColorsAction() {
+        super(
+            "Define Colors...",
+            "Define highlight colors",
+            IconLoader.getIcon("/icons/colors.svg")
+        );
+    }
 
     @Override
     public void actionPerformed(@NotNull AnActionEvent anActionEvent) {

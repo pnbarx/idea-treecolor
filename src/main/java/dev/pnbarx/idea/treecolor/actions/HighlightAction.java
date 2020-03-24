@@ -16,67 +16,54 @@
 
 package dev.pnbarx.idea.treecolor.actions;
 
+import com.intellij.openapi.actionSystem.AnAction;
 import dev.pnbarx.idea.treecolor.state.ProjectState;
-import dev.pnbarx.idea.treecolor.state.models.ColorSettings;
-import dev.pnbarx.idea.treecolor.ui.ColoredCircleIcon;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.Presentation;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.vfs.VirtualFile;
+import dev.pnbarx.idea.treecolor.utils.ActionUtils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
 
 
-public class HighlightAction extends AbstractAction {
+public class HighlightAction extends AnAction {
 
     private static final Logger LOG = Logger.getInstance(HighlightAction.class);
 
-    public void actionPerformed(@NotNull AnActionEvent actionEvent) {
-        ProjectState projectState = getProjectState(actionEvent);
-        if (projectState == null) return;
-        int colorIndex = getColorIndex(actionEvent);
+    @SuppressWarnings({"UnusedDeclaration"}) // action must have a no-argument constructor
+    public HighlightAction() {
+        super();
+    }
 
-        VirtualFile[] files = getFiles(actionEvent);
+    public HighlightAction(@Nullable String name, @Nullable String description, @Nullable Icon icon) {
+        super(name, description, icon);
+    }
+
+    @Override
+    public void actionPerformed(@NotNull AnActionEvent actionEvent) {
+        ProjectState projectState = ProjectState.getInstance(actionEvent);
+        if (projectState == null) return;
+        int colorIndex = getColorIndex();
+        VirtualFile[] files = ActionUtils.getFiles(actionEvent);
         projectState.files.addNodes(files, colorIndex);
     }
 
-    public void update(@NotNull AnActionEvent actionEvent) {
-
-        ColorSettings colorSettings = getColorSettings(actionEvent);
-        Presentation presentation = actionEvent.getPresentation();
-
-        if (colorSettings == null || !colorSettings.isEnabled()) {
-            presentation.setVisible(false);
-        } else {
-            Icon actionIcon = ColoredCircleIcon.getInstance(colorSettings.getColorHex());
-            String actionName = colorSettings.getName().trim();
-            if (actionName.equals("")) {
-                actionName = " ";
-            } else if (actionName.length() > 50) {
-                actionName = actionName.substring(0, 50) + "...";
-            }
-            presentation.setIcon(actionIcon);
-            presentation.setText(actionName);
-        }
-    }
-
-    @Nullable
-    protected ColorSettings getColorSettings(AnActionEvent actionEvent) {
-        int colorIndex = getColorIndex(actionEvent);
-        ProjectState projectState = getProjectState(actionEvent);
-        if (projectState == null) return null;
-
-        return projectState.colors.getColorSettingsOrNull(colorIndex);
-    }
-
-    protected int getColorIndex(AnActionEvent actionEvent) {
-        String actionId = getId(actionEvent);
+    protected int getColorIndex() {
+        Presentation presentation = getTemplatePresentation();
         try {
-            return Integer.parseInt(actionId.replaceAll("\\D", ""));
-        } catch (NumberFormatException e) {
+            return (int) presentation.getClientProperty("colorIndex");
+        } catch (NullPointerException e) {
+            LOG.debug("colorIndex is undefined");
             return -1;
         }
     }
+
+    public void setColorIndex(int colorIndex) {
+        Presentation presentation = getTemplatePresentation();
+        presentation.putClientProperty("colorIndex", colorIndex);
+    }
+
 }

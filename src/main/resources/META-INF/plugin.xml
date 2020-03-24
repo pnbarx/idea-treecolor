@@ -99,50 +99,10 @@
     </extensions>
 
     <actions>
-        <group id="dev.pnbarx.idea.treecolor" text="Highlight"
-               description="Highlight your project files and folders"
+        <group id="dev.pnbarx.idea.treecolor.actions.HighlightActionGroup"
+               class="dev.pnbarx.idea.treecolor.actions.HighlightActionGroup"
+               text="Highlight" description="Highlight your project files and folders"
                icon="/icons/highlight.png" popup="true">
-            <action id="highlight0"
-                    class="dev.pnbarx.idea.treecolor.actions.HighlightAction"
-                    text="Color 1" description="Highlight in color #1"/>
-            <action id="highlight1" class="dev.pnbarx.idea.treecolor.actions.HighlightAction"
-                    text="Color 2" description="Highlight in color #2"/>
-            <action id="highlight2" class="dev.pnbarx.idea.treecolor.actions.HighlightAction"
-                    text="Color 3" description="Highlight in color #3"/>
-            <action id="highlight3" class="dev.pnbarx.idea.treecolor.actions.HighlightAction"
-                    text="Color 4" description="Highlight in color #4"/>
-            <action id="highlight4" class="dev.pnbarx.idea.treecolor.actions.HighlightAction"
-                    text="Color 5" description="Highlight in color #5"/>
-            <action id="highlight5" class="dev.pnbarx.idea.treecolor.actions.HighlightAction"
-                    text="Color 6" description="Highlight in color #6"/>
-            <action id="highlight6" class="dev.pnbarx.idea.treecolor.actions.HighlightAction"
-                    text="Color 7" description="Highlight in color #7"/>
-            <action id="highlight7" class="dev.pnbarx.idea.treecolor.actions.HighlightAction"
-                    text="Color 8" description="Highlight in color #8"/>
-            <action id="highlight8" class="dev.pnbarx.idea.treecolor.actions.HighlightAction"
-                    text="Color 9" description="Highlight in color #9"/>
-            <action id="highlight9" class="dev.pnbarx.idea.treecolor.actions.HighlightAction"
-                    text="Color 10" description="Highlight in color #10"/>
-            <action id="highlight10" class="dev.pnbarx.idea.treecolor.actions.HighlightAction"
-                    text="Color 11" description="Highlight in color #11"/>
-            <action id="highlight11" class="dev.pnbarx.idea.treecolor.actions.HighlightAction"
-                    text="Color 12" description="Highlight in color #12"/>
-            <action id="highlight12" class="dev.pnbarx.idea.treecolor.actions.HighlightAction"
-                    text="Color 13" description="Highlight in color #13"/>
-            <action id="highlight13" class="dev.pnbarx.idea.treecolor.actions.HighlightAction"
-                    text="Color 14" description="Highlight in color #14"/>
-            <action id="highlight14" class="dev.pnbarx.idea.treecolor.actions.HighlightAction"
-                    text="Color 15" description="Highlight in color #15"/>
-            <action id="highlight15" class="dev.pnbarx.idea.treecolor.actions.HighlightAction"
-                    text="Color 16" description="Highlight in color #16"/>
-            <separator/>
-            <action id="clear" class="dev.pnbarx.idea.treecolor.actions.ClearAction" text="Clear"
-                    description="Remove highlighting"/>
-            <action id="clearRecursive" class="dev.pnbarx.idea.treecolor.actions.ClearAction" text="Clear Recursive"
-                    description="Remove highlighting recursively"/>
-            <separator/>
-            <action class="dev.pnbarx.idea.treecolor.actions.DefineColorsAction" text="Define Colors..."
-                    icon="/icons/colors.svg" description="Define highlight colors"/>
             <add-to-group group-id="ProjectViewPopupMenuModifyGroup" anchor="last"/>
         </group>
     </actions>

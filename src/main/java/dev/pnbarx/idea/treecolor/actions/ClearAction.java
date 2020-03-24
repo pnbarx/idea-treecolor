@@ -16,6 +16,7 @@
 
 package dev.pnbarx.idea.treecolor.actions;
 
+import com.intellij.openapi.actionSystem.AnAction;
 import dev.pnbarx.idea.treecolor.state.ProjectState;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.diagnostic.Logger;
@@ -24,20 +25,16 @@ import dev.pnbarx.idea.treecolor.utils.ActionUtils;
 import org.jetbrains.annotations.NotNull;
 
 
-public class ClearAction extends AbstractAction {
+public class ClearAction extends AnAction {
 
     private static final Logger LOG = Logger.getInstance(ClearAction.class);
 
-    public void actionPerformed(@NotNull AnActionEvent actionEvent) {
-
-        VirtualFile[] files = getFiles(actionEvent);
-        ProjectState projectState = getProjectState(actionEvent);
-        Presentation presentation = actionEvent.getPresentation();
-
-        if (projectState != null) {
-            projectState.files.removeNodes(files, isRecursive(actionEvent));
-            presentation.setEnabled(false);
-        }
+    public ClearAction() {
+        super(
+            "Clear",
+            "Remove highlighting",
+            null
+        );
     }
 
     @Override
