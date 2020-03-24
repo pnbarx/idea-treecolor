@@ -55,16 +55,20 @@ public class FilesState {
         return colorIndex;
     }
 
-    public boolean isHighlighted(VirtualFile[] files, boolean recursive) {
-        if (recursive) {
-            return Arrays.stream(files).anyMatch(file ->
-                    state.stream().anyMatch(node ->
-                            (node.path).startsWith(file.getPath() + "/")));
-        } else {
-            return Arrays.stream(files).anyMatch(file ->
-                    state.stream().anyMatch(node ->
-                            (node.path).equals(file.getPath())));
-        }
+    public boolean isHighlighted(VirtualFile[] files) {
+        return Arrays.stream(files).anyMatch(
+            file -> state.stream().anyMatch(
+                node -> node.path.equals(file.getPath())
+            )
+        );
+    }
+
+    public boolean isHighlightedRecursively(VirtualFile[] files) {
+        return Arrays.stream(files).anyMatch(
+            file -> state.stream().anyMatch(
+                node -> node.path.startsWith(addTrailingSlash(file.getPath()))
+            )
+        );
     }
 
     public void addNode(VirtualFile file, int colorIndex) {
