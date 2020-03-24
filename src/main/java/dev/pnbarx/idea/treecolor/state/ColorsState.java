@@ -29,6 +29,7 @@ import java.util.List;
 
 public class ColorsState {
 
+    public static final int NUMBER_OF_COLOR_PRESETS = 16;
     private static final Logger LOG = Logger.getInstance(ColorsState.class);
 
     private ProjectState projectState;

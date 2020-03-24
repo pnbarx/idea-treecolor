@@ -16,6 +16,7 @@
 
 package dev.pnbarx.idea.treecolor.ui.views;
 
+import dev.pnbarx.idea.treecolor.state.ColorsState;
 import dev.pnbarx.idea.treecolor.ui.ColorSettingsComponent;
 import dev.pnbarx.idea.treecolor.state.ProjectState;
 import com.intellij.openapi.diagnostic.Logger;
@@ -52,7 +53,7 @@ public class ColorsDialog extends DialogWrapper {
 
         JPanel colorsPanel = new JPanel(new GridLayout(0, 4, 10, 0));
         colorsPanel.setBorder(BorderFactory.createEmptyBorder(8, 0, 0, 0));
-        for (int i = 0; i < 16; i++) {
+        for (int i = 0; i < ColorsState.NUMBER_OF_COLOR_PRESETS; i++) {
             ColorSettingsComponent component = new ColorSettingsComponent(projectState.colors, i);
             colorsPanel.add(component);
         }
