@@ -85,22 +85,25 @@ public class FilesState {
         }
     }
 
-    public void removeNode(VirtualFile file, boolean recursive) {
-        String path = file.getPath();
-        if (recursive) {
-            state.removeIf(node -> (node.path + "/").startsWith(path + "/"));
-        } else {
+    public void removeNodes(@Nullable VirtualFile[] files) {
+        if (files == null) return;
+        for (VirtualFile file : files) {
+            String path = file.getPath();
             state.removeIf(node -> node.path.equals(path));
         }
         projectState.updateUI();
     }
 
-    public void removeNodes(VirtualFile[] files, boolean recursive) {
+    public void removeNodesRecursively(@Nullable VirtualFile[] files) {
+        if (files == null) return;
         for (VirtualFile file : files) {
-            removeNode(file, recursive);
+            String path = file.getPath();
+            state.removeIf(
+                node -> addTrailingSlash(node.path).startsWith(addTrailingSlash(path))
+            );
         }
+        projectState.updateUI();
     }
-
 
     private String addTrailingSlash(String path) {
         return path.endsWith("/") ? path : path + "/";
