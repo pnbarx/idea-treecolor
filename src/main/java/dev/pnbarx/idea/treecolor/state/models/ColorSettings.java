@@ -30,14 +30,15 @@ import java.awt.*;
 @Property(surroundWithTag = false, flat = true)
 public class ColorSettings implements Cloneable {
 
+    // attributes must be public for PersistentStateComponent xml serialization
     @Attribute("name")
-    public String name;
+    public String _name;
 
     @Attribute("value")
-    public String colorHex;
+    public String _colorHex;
 
     @Attribute("enabled")
-    public boolean enabled;
+    public boolean _enabled;
 
     // needed for xml serialization
     @SuppressWarnings({"UnusedDeclaration"})
@@ -58,30 +59,30 @@ public class ColorSettings implements Cloneable {
 
     @Transient
     public String getName() {
-        return this.name;
+        return this._name;
     }
 
     public void setName(String name) {
-        this.name = name;
+        this._name = name;
     }
 
     @Transient
     public String getColorHex() {
-        return this.colorHex;
+        return this._colorHex;
     }
 
     @Transient
     public Color getColor() {
-        return ColorUtil.fromHex(this.colorHex, getDefaultColor());
+        return ColorUtil.fromHex(this._colorHex, getDefaultColor());
     }
 
     public void setColor(String colorHex) {
-        this.colorHex = colorHex;
+        this._colorHex = colorHex;
     }
 
     public void setColor(Color color) {
         if (color == null) color = getDefaultColor();
-        this.colorHex = ColorUtil.toHex(color);
+        this._colorHex = ColorUtil.toHtmlColor(color);
     }
 
     @Transient
@@ -91,11 +92,11 @@ public class ColorSettings implements Cloneable {
 
     @Transient
     public boolean isEnabled() {
-        return this.enabled;
+        return this._enabled;
     }
 
     public void setEnabled(boolean isEnabled) {
-        this.enabled = isEnabled;
+        this._enabled = isEnabled;
     }
 
     @Override
