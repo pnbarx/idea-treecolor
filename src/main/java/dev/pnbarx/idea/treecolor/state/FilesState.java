@@ -44,10 +44,10 @@ public class FilesState {
     @Nullable
     public Integer getNodeColorIndex(VirtualFile file) {
         Integer colorIndex = null;
-        String path = file.getPath() + "/";
+        String path = addTrailingSlash(file.getPath());
 
         for (HighlightedFile node : state) {
-            if (path.startsWith(node.path + "/")) {
+            if (path.startsWith(addTrailingSlash(node.path))) {
                 colorIndex = node.colorIndex - 1;
             }
         }
@@ -97,4 +97,8 @@ public class FilesState {
         }
     }
 
+
+    private String addTrailingSlash(String path) {
+        return path.endsWith("/") ? path : path + "/";
+    }
 }
