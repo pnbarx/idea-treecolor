@@ -18,9 +18,9 @@ package dev.pnbarx.idea.treecolor.actions;
 
 import dev.pnbarx.idea.treecolor.state.ProjectState;
 import com.intellij.openapi.actionSystem.AnActionEvent;
-import com.intellij.openapi.actionSystem.Presentation;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.vfs.VirtualFile;
+import dev.pnbarx.idea.treecolor.utils.ActionUtils;
 import org.jetbrains.annotations.NotNull;
 
 
@@ -40,15 +40,25 @@ public class ClearAction extends AbstractAction {
         }
     }
 
-    public void update(@NotNull AnActionEvent actionEvent) {
-        ProjectState projectState = getProjectState(actionEvent);
-        VirtualFile[] files = getFiles(actionEvent);
-        Presentation presentation = actionEvent.getPresentation();
+    @Override
+    public void actionPerformed(@NotNull AnActionEvent actionEvent) {
+        VirtualFile[] files = ActionUtils.getFiles(actionEvent);
+        ProjectState projectState = ProjectState.getInstance(actionEvent);
 
-        if (projectState != null && projectState.files.isHighlighted(files, isRecursive(actionEvent))) {
-            presentation.setEnabled(true);
+        if (projectState != null) {
+            projectState.files.removeNodes(files);
+        }
+    }
+
+    @Override
+    public void update(@NotNull AnActionEvent actionEvent) {
+        ProjectState projectState = ProjectState.getInstance(actionEvent);
+        VirtualFile[] files = ActionUtils.getFiles(actionEvent);
+
+        if (projectState != null && projectState.files.isHighlighted(files)) {
+            ActionUtils.setEnabled(actionEvent, true);
         } else {
-            presentation.setEnabled(false);
+            ActionUtils.setEnabled(actionEvent, false);
         }
     }
 
