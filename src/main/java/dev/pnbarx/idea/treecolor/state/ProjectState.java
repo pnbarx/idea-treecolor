@@ -16,6 +16,7 @@
 
 package dev.pnbarx.idea.treecolor.state;
 
+import com.intellij.openapi.actionSystem.AnActionEvent;
 import dev.pnbarx.idea.treecolor.state.models.ColorSettings;
 import dev.pnbarx.idea.treecolor.state.models.HighlightedFile;
 import com.intellij.ide.projectView.ProjectView;
@@ -56,6 +57,12 @@ public class ProjectState implements PersistentStateComponent<ProjectState.State
         instance.colors.linkState(instance.state.colors);
         instance.files.linkState(instance.state.files);
         return instance;
+    }
+
+    @Nullable
+    public static ProjectState getInstance(@Nullable AnActionEvent actionEvent) {
+        if (actionEvent == null) return null;
+        return getInstance(actionEvent.getProject());
     }
 
     @Override
