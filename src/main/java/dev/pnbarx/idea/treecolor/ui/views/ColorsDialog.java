@@ -42,7 +42,7 @@ public class ColorsDialog extends DialogWrapper {
         projectState.colors.useShadow();
 
         //noinspection DialogTitleCapitalization
-        setTitle("Define Colors (right-click to set color name)");
+        setTitle("Define Colors (right-click to set the color name)");
         init();
     }
 
