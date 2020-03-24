@@ -26,47 +26,46 @@
         <br/>
 
         <img src="https://raw.githubusercontent.com/pnbarx/idea-treecolor/master/images/highlight-menu.png" alt="Highlight menu">
-
         <br/>
         <br/>
 
-        When you are working on a large complex project you may need to highlight
-        some of its parts in different colors.
-        <br>
-        <br>
-        Previously, there was only one way to do this:
-        create a scope, specify its name and filename pattern, then add a color
-        and attach it to the created scope, then click <code>Ok</code> and <code>Apply</code>
-        to see how it looks now. If the color doesn't fit, double-click it, select a new color,
-        click <code>OK</code> and <code>Apply</code> again to see the changes. If the color
-        doesn't fit again - repeat until it fits.
-        This is a rather inconvenient way (and takes a lot of time).
+        <div width="400">
+            When you are working on a large complex project you may need to highlight
+            some of its parts in different colors.
+            <br/>
+            <br/>
 
-        <br/>
-        <br/>
+            Previously, there was only one way to do this:
+            create a scope, specify its name and filename pattern, then add a color
+            and attach it to the created scope, then click <code>Ok</code> and <code>Apply</code>
+            to see how it looks now. If the color doesn't fit, double-click it, select a new color,
+            click <code>OK</code> and <code>Apply</code> again to see the changes. If the color
+            doesn't fit again - repeat until it fits.
+            This is a rather inconvenient way (and takes a lot of time).
+            <br/>
+            <br/>
 
-        <strong>ProjectTree Color Highlighter</strong> was made to get rid of this inconvenience.
-        Highlight your files and folders with ease using the context menu. Adjust the colors
-        using the color picker, get an instant preview of the project tree and editor tabs
-        while adjusting.
-
-        <br/>
-        <br/>
+            <strong>ProjectTree Color Highlighter</strong> was made to get rid of this inconvenience.
+            Highlight your files and folders with ease using the context menu. Adjust the colors
+            using the color picker, get an instant preview of the project tree and editor tabs
+            while adjusting.
+            <br/>
+            <br/>
+        </div>
 
         <img src="https://raw.githubusercontent.com/pnbarx/idea-treecolor/master/images/color-adjustment.gif" alt="Color adjustment">
-
         <br/>
         <br/>
 
-        All settings are persistently stored in the <code><nobr>.idea/highlightedFiles.xml</nobr></code>,
-        so you can read and change it externally, clone or copy-paste to other projects, etc.
-        (This allows you to create various project boilerplates with predefined highlighting settings.)
-
-        <br/>
-        <br/>
+        <div width="400">
+            All settings are persistently stored in the <code><nobr>.idea/highlightedFiles.xml</nobr></code>,
+            so you can read and change it externally, clone or copy-paste to other projects, etc.
+            (This allows you to create various project boilerplates with predefined highlighting settings.)
+            <br/>
+            <br/>
+        </div>
 
         <img src="https://raw.githubusercontent.com/pnbarx/idea-treecolor/master/images/config-file.png" alt="Config file">
-
         <br/>
         <br/>
         <br/>
@@ -74,7 +73,6 @@
         Enjoy and write a lot of awesome code!
         <br/>
         <br/>
-
 
     ]]></description>
 
