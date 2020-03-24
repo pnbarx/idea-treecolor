@@ -14,30 +14,26 @@
  * limitations under the License.
  */
 
-package dev.pnbarx.idea.treecolor.actions;
+package dev.pnbarx.idea.treecolor.utils;
 
-import dev.pnbarx.idea.treecolor.state.ProjectState;
-import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.CommonDataKeys;
-import com.intellij.openapi.project.Project;
+import com.intellij.openapi.actionSystem.Presentation;
 import com.intellij.openapi.vfs.VirtualFile;
 import org.jetbrains.annotations.Nullable;
 
-public abstract class AbstractAction extends AnAction {
 
-    protected String getId(AnActionEvent actionEvent) {
-        return actionEvent.getActionManager().getId(this);
-    }
+public class ActionUtils {
 
-    protected VirtualFile[] getFiles(AnActionEvent actionEvent) {
+    @Nullable
+    public static VirtualFile[] getFiles(@Nullable AnActionEvent actionEvent) {
+        if (actionEvent == null) return null;
         return actionEvent.getData(CommonDataKeys.VIRTUAL_FILE_ARRAY);
     }
 
-    @Nullable
-    protected ProjectState getProjectState(AnActionEvent actionEvent) {
-        Project project = actionEvent.getProject();
-        return ProjectState.getInstance(project);
+    public static void setEnabled(AnActionEvent actionEvent, boolean enabled) {
+        Presentation presentation = actionEvent.getPresentation();
+        presentation.setEnabled(enabled);
     }
 
 }
