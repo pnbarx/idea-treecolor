@@ -28,7 +28,7 @@ public class DefineColorsAction extends AnAction {
     @Override
     public void actionPerformed(@NotNull AnActionEvent anActionEvent) {
         Project project = anActionEvent.getProject();
-        if(project==null) return;
+        if (project == null) return;
         ColorsDialog dialog = new ColorsDialog(project);
         dialog.show();
     }

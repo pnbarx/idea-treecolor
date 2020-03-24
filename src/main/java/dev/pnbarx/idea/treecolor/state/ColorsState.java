@@ -82,21 +82,21 @@ public class ColorsState {
 
     private void initWithDefaults() {
         JBColor[] defaultColors = {
-                new JBColor(0xde2c2c, 0x4f060d),
-                new JBColor(0xff6d0d, 0x44220e),
-                new JBColor(0xfefc22, 0x3f371b),
-                new JBColor(0x28ff2e, 0x162c16),
-                new JBColor(0x00f2ff, 0x0f2f47),
-                new JBColor(0x00b5ff, 0x171a34),
-                new JBColor(0xb892db, 0x311333),
-                new JBColor(0xbebebe, 0x1e1e1e)
+            new JBColor(0xde2c2c, 0x4f060d),
+            new JBColor(0xff6d0d, 0x44220e),
+            new JBColor(0xfefc22, 0x3f371b),
+            new JBColor(0x28ff2e, 0x162c16),
+            new JBColor(0x00f2ff, 0x0f2f47),
+            new JBColor(0x00b5ff, 0x171a34),
+            new JBColor(0xb892db, 0x311333),
+            new JBColor(0xbebebe, 0x1e1e1e)
         };
         realState.clear();
         for (int i = 0; i < defaultColors.length; i++) {
             realState.add(new ColorSettings(
-                    ColorUtil.toHtmlColor(defaultColors[i]),
-                    true,
-                    "Color " + (i + 1)
+                ColorUtil.toHtmlColor(defaultColors[i]),
+                true,
+                "Color " + (i + 1)
             ));
         }
     }
