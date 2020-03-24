@@ -96,10 +96,10 @@ public class ColorSettingsComponent extends JPanel {
             Color newColor = ColorChooser.chooseColor(this, "Choose Color", currentColor, false, listeners, false);
 
             if (newColor != null) {
-                colorHex = "#" + ColorUtil.toHex(newColor);
+                colorHex = ColorUtil.toHtmlColor(newColor);
                 isEnabled = true;
             } else {
-                colorHex = "#" + ColorUtil.toHex(currentColor);
+                colorHex = ColorUtil.toHtmlColor(currentColor);
             }
             ColorSettingsComponent.this.update();
         }

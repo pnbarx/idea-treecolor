@@ -111,7 +111,7 @@ public class ColorsState {
 
     public ColorSettings getDefaultColorSettings(int index) {
         Color defaultColor = ColorSettings.getDefaultColor();
-        String defaultColorHex = "#" + ColorUtil.toHex(defaultColor);
+        String defaultColorHex = ColorUtil.toHtmlColor(defaultColor);
         return new ColorSettings(defaultColorHex, false, "Color " + (index + 1));
     }
 
