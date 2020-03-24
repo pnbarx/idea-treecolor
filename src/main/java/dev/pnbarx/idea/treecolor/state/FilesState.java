@@ -71,18 +71,15 @@ public class FilesState {
         );
     }
 
-    public void addNode(VirtualFile file, int colorIndex) {
-        String path = file.getPath();
-        state.removeIf(node -> node.path.equals(path));
-        state.add(new HighlightedFile(path, colorIndex + 1));
+    public void addNodes(@Nullable VirtualFile[] files, int colorIndex) {
+        if (files == null) return;
+        for (VirtualFile file : files) {
+            String path = file.getPath();
+            state.removeIf(node -> node.path.equals(path));
+            state.add(new HighlightedFile(path, colorIndex + 1));
+        }
         state.sort(Comparator.comparing(node -> node.path));
         projectState.updateUI();
-    }
-
-    public void addNodes(VirtualFile[] files, int colorIndex) {
-        for (VirtualFile file : files) {
-            addNode(file, colorIndex);
-        }
     }
 
     public void removeNodes(@Nullable VirtualFile[] files) {
