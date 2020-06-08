@@ -29,7 +29,7 @@
         <br/>
         <br/>
 
-        <div width="380">
+        <div style="width:350px">
             When you are working on a large complex project you may need to highlight
             some of its parts in different colors.
             <br/>
@@ -57,7 +57,7 @@
         <br/>
         <br/>
 
-        <div width="380">
+        <div style="width:350px">
             All settings are persistently stored in the <code><nobr>.idea/highlightedFiles.xml</nobr></code>,
             so you can read and change it externally, clone or copy-paste to other projects, etc.
             (This allows you to create various project boilerplates with predefined highlighting settings.)
@@ -79,6 +79,9 @@
     <!--suppress PluginXmlValidity -->
     <change-notes><![CDATA[
         <ul>
+            <li>
+                1.1.2 Support for 2020.2
+            </li>
             <li>
                 1.1.1 Bug fixes
             </li>
