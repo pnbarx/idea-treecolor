@@ -17,11 +17,11 @@
 package dev.pnbarx.idea.treecolor.actions;
 
 import com.intellij.openapi.actionSystem.AnAction;
-import dev.pnbarx.idea.treecolor.state.ProjectState;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.Presentation;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.vfs.VirtualFile;
+import dev.pnbarx.idea.treecolor.services.ProjectStateService;
 import dev.pnbarx.idea.treecolor.utils.ActionUtils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -44,26 +44,28 @@ public class HighlightAction extends AnAction {
 
     @Override
     public void actionPerformed(@NotNull AnActionEvent actionEvent) {
-        ProjectState projectState = ProjectState.getInstance(actionEvent);
-        if (projectState == null) return;
-        int colorIndex = getColorIndex();
+        ProjectStateService projectStateService = ProjectStateService.getInstance(actionEvent);
+        if (projectStateService == null) return;
+        int colorId = getColorId();
         VirtualFile[] files = ActionUtils.getFiles(actionEvent);
-        projectState.files.addNodes(files, colorIndex);
+        projectStateService.files.addNodes(files, colorId);
+        projectStateService.saveState();
     }
 
-    protected int getColorIndex() {
+    protected int getColorId() {
         Presentation presentation = getTemplatePresentation();
         try {
-            return (int) presentation.getClientProperty("colorIndex");
+            //noinspection ConstantConditions
+            return (int) presentation.getClientProperty("colorId");
         } catch (NullPointerException e) {
             LOG.debug("colorIndex is undefined");
             return -1;
         }
     }
 
-    public void setColorIndex(int colorIndex) {
+    public void setColorId(int colorId) {
         Presentation presentation = getTemplatePresentation();
-        presentation.putClientProperty("colorIndex", colorIndex);
+        presentation.putClientProperty("colorId", colorId);
     }
 
 }

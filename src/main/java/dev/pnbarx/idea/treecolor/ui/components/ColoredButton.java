@@ -14,12 +14,14 @@
  * limitations under the License.
  */
 
-package dev.pnbarx.idea.treecolor.ui;
+package dev.pnbarx.idea.treecolor.ui.components;
 
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.ui.ColorUtil;
 import com.intellij.ui.JBColor;
+import dev.pnbarx.idea.treecolor.utils.UIUtils;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
 import javax.swing.plaf.ButtonUI;
@@ -32,9 +34,9 @@ import java.awt.geom.Path2D;
 import java.awt.geom.RoundRectangle2D;
 
 
-public abstract class ColoredButtonComponent extends JButton {
+public abstract class ColoredButton extends JButton {
 
-    private static final Logger LOG = Logger.getInstance(ColoredButtonComponent.class);
+    private static final Logger LOG = Logger.getInstance(ColoredButton.class);
 
     private static final int hPadding = 15;
     private static final int vPadding = 12;
@@ -42,9 +44,9 @@ public abstract class ColoredButtonComponent extends JButton {
     private Color backgroundColor;
     private Color foregroundColor;
 
-    public ColoredButtonComponent(String text, String backgroundColorHex) {
+    public ColoredButton(String text, @Nullable Color backgroundColor) {
         super(text);
-        setBackground(backgroundColorHex);
+        setBackground(backgroundColor);
         setUI(createUI());
         setOpaque(false);
         setRolloverEnabled(true);
@@ -73,13 +75,9 @@ public abstract class ColoredButtonComponent extends JButton {
     }
 
     @Override
-    public void setBackground(Color color) {
-        backgroundColor = color;
-        foregroundColor = ColorUtil.isDark(color) ? Color.WHITE : Color.BLACK;
-    }
-
-    public void setBackground(String colorHex) {
-        setBackground(ColorUtil.fromHex(colorHex, Color.DARK_GRAY));
+    public void setBackground(@Nullable Color color) {
+        backgroundColor = color != null ? color : UIUtils.getDefaultTreeBackgroundColor();
+        foregroundColor = ColorUtil.isDark(backgroundColor) ? Color.WHITE : Color.BLACK;
     }
 
     @Override
@@ -104,10 +102,10 @@ public abstract class ColoredButtonComponent extends JButton {
         }
 
         @Override
-        public void paint(final Graphics g, final JComponent c) {
+        public void paint(@NotNull final Graphics g, final JComponent c) {
 
             Graphics2D g2d = (Graphics2D) g.create();
-            ColoredButtonComponent button = (ColoredButtonComponent) c;
+            ColoredButton button = (ColoredButton) c;
 
             try {
                 g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
@@ -138,9 +136,9 @@ public abstract class ColoredButtonComponent extends JButton {
                 border.append(outerShape, false);
                 //noinspection SuspiciousNameCombination
                 border.append(new RoundRectangle2D.Float(
-                        borderWidth, borderWidth,
-                        width - borderWidth * 2, height - borderWidth * 2,
-                        arcSize - borderWidth, arcSize - borderWidth
+                    borderWidth, borderWidth,
+                    width - borderWidth * 2, height - borderWidth * 2,
+                    arcSize - borderWidth, arcSize - borderWidth
                 ), false);
                 g2d.fill(border);
 
@@ -151,15 +149,15 @@ public abstract class ColoredButtonComponent extends JButton {
             super.paint(g, button);
         }
 
-        protected Color getBackgroundColor(@NotNull ColoredButtonComponent button) {
+        protected Color getBackgroundColor(@NotNull ColoredButton button) {
             return button.getBackground();
         }
 
-        protected Color getBorderColor(@NotNull ColoredButtonComponent button) {
+        protected Color getBorderColor(@NotNull ColoredButton button) {
             return new JBColor(0x999999, 0x777777);
         }
 
-        protected Color getFocusedBorderColor(@NotNull ColoredButtonComponent button) {
+        protected Color getFocusedBorderColor(@NotNull ColoredButton button) {
             return new JBColor(0x555555, 0xaaaaaa);
         }
 

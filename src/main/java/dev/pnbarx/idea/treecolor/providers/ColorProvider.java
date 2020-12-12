@@ -16,39 +16,37 @@
 
 package dev.pnbarx.idea.treecolor.providers;
 
-import dev.pnbarx.idea.treecolor.state.models.ColorSettings;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.fileEditor.impl.EditorTabColorProvider;
 import com.intellij.openapi.fileEditor.impl.EditorWindow;
+import com.intellij.openapi.project.DumbAware;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.ui.ColorUtil;
+import dev.pnbarx.idea.treecolor.services.ProjectStateService;
+import dev.pnbarx.idea.treecolor.state.beans.ColorSettings;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import dev.pnbarx.idea.treecolor.state.ProjectState;
 
 import java.awt.*;
 
 
-public class ColorProvider implements EditorTabColorProvider {
+public class ColorProvider implements EditorTabColorProvider, DumbAware {
 
     private static final Logger LOG = Logger.getInstance(ColorProvider.class);
 
     @Nullable
     private Color getColor(@NotNull Project project, @NotNull VirtualFile file) {
 
-        ProjectState projectState = ProjectState.getInstance(project);
-        if(projectState == null) return null;
+        ProjectStateService projectStateService = ProjectStateService.getInstance(project);
+        if (projectStateService == null) return null;
 
-        projectState.triggerProjectOpened();
+        Integer colorId = projectStateService.files.getNodeColorId(file);
+        if (colorId == null) return null;
 
-        Integer colorIndex = projectState.files.getNodeColorIndex(file);
-        if(colorIndex == null) return null;
+        ColorSettings colorSettings = projectStateService.colors.getColorSettingsById(colorId);
+        if (!colorSettings.isSetAndEnabled()) return null;
 
-        ColorSettings colorSettings = projectState.colors.getColorSettings(colorIndex);
-        if(!colorSettings.isEnabled()) return null;
-
-        return ColorUtil.fromHex(colorSettings.getColorHex(), Color.DARK_GRAY);
+        return colorSettings.getColor();
     }
 
     @Nullable

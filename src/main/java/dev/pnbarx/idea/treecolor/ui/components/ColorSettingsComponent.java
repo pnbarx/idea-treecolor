@@ -14,13 +14,13 @@
  * limitations under the License.
  */
 
-package dev.pnbarx.idea.treecolor.ui;
+package dev.pnbarx.idea.treecolor.ui.components;
 
-import dev.pnbarx.idea.treecolor.state.models.ColorSettings;
-import dev.pnbarx.idea.treecolor.state.ColorsState;
+import dev.pnbarx.idea.treecolor.state.ProjectColors;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.ui.DialogWrapper;
 import com.intellij.ui.*;
+import dev.pnbarx.idea.treecolor.state.beans.ColorSettings;
 import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
@@ -34,31 +34,25 @@ public class ColorSettingsComponent extends JPanel {
 
     private static final Logger LOG = Logger.getInstance(ColorSettingsComponent.class);
 
-    private ColorsState colorsState;
-    private int colorIndex;
-    private String colorName;
-    private String colorHex;
-    private boolean isEnabled;
+    private final ProjectColors colors;
+    private final int colorId;
+    private ColorSettings colorSettings;
 
-    private ColorChooserButton colorChooserButton;
-    private JCheckBox enabledCheckbox;
+    private final ColorChooserButton colorChooserButton;
+    private final JCheckBox enabledCheckbox;
 
-    public ColorSettingsComponent(ColorsState colorsState, int colorIndex) {
+    public ColorSettingsComponent(ProjectColors colors, int colorId) {
         super(new GridLayout(2, 1));
 
-        this.colorsState = colorsState;
-        this.colorIndex = colorIndex;
+        this.colors = colors;
+        this.colorId = colorId;
+        this.colorSettings = colors.getColorSettingsById(colorId);
 
-        ColorSettings colorSettings = colorsState.getColorSettings(colorIndex);
-        colorName = colorSettings.getName();
-        colorHex = colorSettings.getColorHex();
-        isEnabled = colorSettings.isEnabled();
-
-        colorChooserButton = new ColorChooserButton(colorName, colorHex);
+        colorChooserButton = new ColorChooserButton(colorSettings.getName(), colorSettings.getColor());
         colorChooserButton.setMinimumSize(new Dimension(110, 40));
         colorChooserButton.setPreferredSize(new Dimension(160, 40));
 
-        enabledCheckbox = new JCheckBox("enabled", isEnabled);
+        enabledCheckbox = new JCheckBox("enabled", colorSettings.isEnabled());
         enabledCheckbox.setHorizontalAlignment(JCheckBox.CENTER);
         enabledCheckbox.setVerticalAlignment(JCheckBox.TOP);
         enabledCheckbox.setFont(UIManager.getFont("Button.font").deriveFont(Font.PLAIN, 10));
@@ -69,39 +63,44 @@ public class ColorSettingsComponent extends JPanel {
         add(enabledCheckbox);
     }
 
-    void enabledCheckboxHandle(ActionEvent actionEvent) {
-        isEnabled = enabledCheckbox.isSelected();
-        update();
+    public void applyColorSettings() {
+        colorChooserButton.setText(colorSettings.getName());
+        colorChooserButton.setBackground(colorSettings.getColor());
+        updateUI();
+        LOG.debug("SET BUTTON COLOR TO " + colorSettings.getColor());
+        enabledCheckbox.setSelected(colorSettings.isEnabled());
+        colors.setColorSettingsById(colorId, colorSettings);
     }
 
-    private void update() {
-        colorChooserButton.setText(colorName);
-        colorChooserButton.setBackground(colorHex);
-        enabledCheckbox.setSelected(isEnabled);
-        colorsState.setColorSettings(colorIndex, colorHex, isEnabled, colorName);
+    public void reloadColorSettings() {
+        colorSettings = colors.getColorSettingsById(colorId);
     }
 
+    private void enabledCheckboxHandle(ActionEvent actionEvent) {
+        colorSettings.setEnabled(enabledCheckbox.isSelected());
+        applyColorSettings();
+    }
 
-    private class ColorChooserButton extends ColoredButtonComponent {
+    private class ColorChooserButton extends ColoredButton {
 
-        protected ColorChooserButton(String text, String colorHex) {
-            super(text, colorHex);
+        protected ColorChooserButton(String text, @Nullable Color color) {
+            super(text, color);
         }
 
         @Override
         protected void onClick(ActionEvent e) {
 
             List<ColorPickerListener> listeners = Collections.singletonList(new ColorChangeListener());
-            Color currentColor = colorsState.getColorSettings(colorIndex).getColor();
-            Color newColor = ColorChooser.chooseColor(this, "Choose Color", currentColor, false, listeners, false);
+            Color currentColor = colorSettings.getColor();
+            Color newColor = ColorChooser.chooseColor(this, "Choose Color", currentColor, true, listeners, true);
 
             if (newColor != null) {
-                colorHex = ColorUtil.toHtmlColor(newColor);
-                isEnabled = true;
+                colorSettings.setColor(newColor);
+                colorSettings.setEnabled(true);
             } else {
-                colorHex = ColorUtil.toHtmlColor(currentColor);
+                colorSettings.setColor(currentColor);
             }
-            ColorSettingsComponent.this.update();
+            ColorSettingsComponent.this.applyColorSettings();
         }
 
         @Override
@@ -125,7 +124,7 @@ public class ColorSettingsComponent extends JPanel {
         @Override
         protected JComponent createCenterPanel() {
             JPanel dialogPanel = new JPanel(new BorderLayout());
-            colorNameInput = new JTextField(colorName);
+            colorNameInput = new JTextField(colorSettings.getName());
             colorNameInput.setPreferredSize(new Dimension(370, 35));
             dialogPanel.add(colorNameInput);
             return dialogPanel;
@@ -138,8 +137,8 @@ public class ColorSettingsComponent extends JPanel {
 
         @Override
         protected void doOKAction() {
-            colorName = colorNameInput.getText().trim();
-            ColorSettingsComponent.this.update();
+            colorSettings.setName(colorNameInput.getText().trim());
+            ColorSettingsComponent.this.applyColorSettings();
             super.doOKAction();
         }
     }
@@ -149,7 +148,8 @@ public class ColorSettingsComponent extends JPanel {
 
         @Override
         public void colorChanged(Color color) {
-            colorsState.setColorSettings(colorIndex, color);
+            colorSettings.setColor(color);
+            colors.setColorSettingsById(colorId, colorSettings);
         }
 
         @Override
