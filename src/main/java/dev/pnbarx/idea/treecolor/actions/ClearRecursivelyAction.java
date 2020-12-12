@@ -20,7 +20,7 @@ import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.vfs.VirtualFile;
-import dev.pnbarx.idea.treecolor.state.ProjectState;
+import dev.pnbarx.idea.treecolor.services.ProjectStateService;
 import dev.pnbarx.idea.treecolor.utils.ActionUtils;
 import org.jetbrains.annotations.NotNull;
 
@@ -40,22 +40,23 @@ public class ClearRecursivelyAction extends AnAction {
     @Override
     public void actionPerformed(@NotNull AnActionEvent actionEvent) {
         VirtualFile[] files = ActionUtils.getFiles(actionEvent);
-        ProjectState projectState = ProjectState.getInstance(actionEvent);
+        ProjectStateService projectStateService = ProjectStateService.getInstance(actionEvent);
 
-        if (projectState != null) {
-            projectState.files.removeNodesRecursively(files);
+        if (projectStateService != null) {
+            projectStateService.files.removeNodesRecursively(files);
+            projectStateService.saveState();
         }
     }
 
     @Override
     public void update(@NotNull AnActionEvent actionEvent) {
-        ProjectState projectState = ProjectState.getInstance(actionEvent);
+        ProjectStateService projectStateService = ProjectStateService.getInstance(actionEvent);
         VirtualFile[] files = ActionUtils.getFiles(actionEvent);
 
-        if (projectState != null && projectState.files.isHighlightedRecursively(files)) {
-            ActionUtils.setEnabled(actionEvent, true);
+        if (projectStateService != null && projectStateService.files.isHighlightedRecursively(files)) {
+            ActionUtils.setActionEnabled(actionEvent, true);
         } else {
-            ActionUtils.setEnabled(actionEvent, false);
+            ActionUtils.setActionEnabled(actionEvent, false);
         }
     }
 

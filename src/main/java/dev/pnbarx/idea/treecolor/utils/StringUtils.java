@@ -16,24 +16,25 @@
 
 package dev.pnbarx.idea.treecolor.utils;
 
-import com.intellij.openapi.actionSystem.AnActionEvent;
-import com.intellij.openapi.actionSystem.CommonDataKeys;
-import com.intellij.openapi.actionSystem.Presentation;
-import com.intellij.openapi.vfs.VirtualFile;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+public class StringUtils {
 
-public class ActionUtils {
-
-    @Nullable
-    public static VirtualFile[] getFiles(@Nullable AnActionEvent actionEvent) {
-        if (actionEvent == null) return null;
-        return actionEvent.getData(CommonDataKeys.VIRTUAL_FILE_ARRAY);
+    @NotNull
+    public static String getSafeLabelString(@Nullable String labelString, String fallbackString, int maxLength) {
+        String safeLabelString = labelString != null ? labelString.trim() : "";
+        if(safeLabelString.equals("")) {
+            return fallbackString;
+        }
+        if(safeLabelString.length() > maxLength) {
+            return safeLabelString.substring(0, maxLength) + "...";
+        }
+        return safeLabelString;
     }
 
-    public static void setActionEnabled(AnActionEvent actionEvent, boolean enabled) {
-        Presentation presentation = actionEvent.getPresentation();
-        presentation.setEnabled(enabled);
+    public static String addTrailingSlash(@NotNull String path) {
+        return path.endsWith("/") ? path : path + "/";
     }
 
 }
