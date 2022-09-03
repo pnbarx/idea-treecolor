@@ -75,6 +75,9 @@
     <change-notes><![CDATA[
         <ul>
             <li>
+                1.2.2 Support for 2021.1.* and above
+            </li>
+            <li>
                 1.2.1 Support for 2021.1
             </li>
             <li>

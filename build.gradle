@@ -4,7 +4,7 @@ plugins {
 }
 
 group 'dev.pnbarx.idea'
-version '1.2.1'
+version '1.2.2'
 
 sourceCompatibility = 1.8
 
@@ -15,10 +15,11 @@ repositories {
 // See https://github.com/JetBrains/gradle-intellij-plugin/
 intellij {
     type 'IU'
-    version 'LATEST-EAP-SNAPSHOT'
+    version '2021.1.1'
     downloadSources true
     updateSinceUntilBuild true
     patchPluginXml {
         sinceBuild "183.2635.13"
+        untilBuild null
     }
 }
