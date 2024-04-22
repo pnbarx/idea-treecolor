@@ -24,7 +24,7 @@ public class StringUtils {
     @NotNull
     public static String getSafeLabelString(@Nullable String labelString, String fallbackString, int maxLength) {
         String safeLabelString = labelString != null ? labelString.trim() : "";
-        if(safeLabelString.equals("")) {
+        if(safeLabelString.isEmpty()) {
             return fallbackString;
         }
         if(safeLabelString.length() > maxLength) {

@@ -16,10 +16,11 @@
 
 package dev.pnbarx.idea.treecolor.ui.components;
 
-import dev.pnbarx.idea.treecolor.state.ProjectColors;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.ui.DialogWrapper;
-import com.intellij.ui.*;
+import com.intellij.ui.ColorChooserService;
+import com.intellij.ui.ColorPickerListener;
+import dev.pnbarx.idea.treecolor.services.ProjectStateService;
 import dev.pnbarx.idea.treecolor.state.beans.ColorSettings;
 import org.jetbrains.annotations.Nullable;
 
@@ -34,19 +35,19 @@ public class ColorSettingsComponent extends JPanel {
 
     private static final Logger LOG = Logger.getInstance(ColorSettingsComponent.class);
 
-    private final ProjectColors colors;
+    private final ProjectStateService project;
     private final int colorId;
     private ColorSettings colorSettings;
 
     private final ColorChooserButton colorChooserButton;
     private final JCheckBox enabledCheckbox;
 
-    public ColorSettingsComponent(ProjectColors colors, int colorId) {
+    public ColorSettingsComponent(ProjectStateService project, int colorId) {
         super(new GridLayout(2, 1));
 
-        this.colors = colors;
+        this.project = project;
         this.colorId = colorId;
-        this.colorSettings = colors.getColorSettingsById(colorId);
+        this.colorSettings = this.project.colors.getColorSettingsById(colorId);
 
         colorChooserButton = new ColorChooserButton(colorSettings.getName(), colorSettings.getColor());
         colorChooserButton.setMinimumSize(new Dimension(110, 40));
@@ -69,11 +70,11 @@ public class ColorSettingsComponent extends JPanel {
         updateUI();
         LOG.debug("SET BUTTON COLOR TO " + colorSettings.getColor());
         enabledCheckbox.setSelected(colorSettings.isEnabled());
-        colors.setColorSettingsById(colorId, colorSettings);
+        project.colors.setColorSettingsById(colorId, colorSettings);
     }
 
     public void reloadColorSettings() {
-        colorSettings = colors.getColorSettingsById(colorId);
+        colorSettings = project.colors.getColorSettingsById(colorId);
     }
 
     private void enabledCheckboxHandle(ActionEvent actionEvent) {
@@ -89,11 +90,10 @@ public class ColorSettingsComponent extends JPanel {
 
         @Override
         protected void onClick(ActionEvent e) {
-
             List<ColorPickerListener> listeners = Collections.singletonList(new ColorChangeListener());
             Color currentColor = colorSettings.getColor();
-            Color newColor = ColorChooser.chooseColor(this, "Choose Color", currentColor, true, listeners, true);
-
+            Color newColor = ColorChooserService.getInstance().showDialog(project.getProject(), this, "Choose Color",
+                    currentColor, true, listeners, true);
             if (newColor != null) {
                 colorSettings.setColor(newColor);
                 colorSettings.setEnabled(true);
@@ -149,7 +149,7 @@ public class ColorSettingsComponent extends JPanel {
         @Override
         public void colorChanged(Color color) {
             colorSettings.setColor(color);
-            colors.setColorSettingsById(colorId, colorSettings);
+            project.colors.setColorSettingsById(colorId, colorSettings);
         }
 
         @Override

@@ -18,7 +18,6 @@ package dev.pnbarx.idea.treecolor.providers;
 
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.fileEditor.impl.EditorTabColorProvider;
-import com.intellij.openapi.fileEditor.impl.EditorWindow;
 import com.intellij.openapi.project.DumbAware;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.vfs.VirtualFile;
@@ -52,12 +51,6 @@ public class ColorProvider implements EditorTabColorProvider, DumbAware {
     @Nullable
     @Override
     public Color getEditorTabColor(@NotNull Project project, @NotNull VirtualFile file) {
-        return getColor(project, file);
-    }
-
-    @Nullable
-    @Override
-    public Color getEditorTabColor(@NotNull Project project, @NotNull VirtualFile file, @Nullable EditorWindow editorWindow) {
         return getColor(project, file);
     }
 

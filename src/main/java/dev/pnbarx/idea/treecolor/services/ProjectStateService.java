@@ -19,12 +19,10 @@ package dev.pnbarx.idea.treecolor.services;
 import com.intellij.configurationStore.StateStorageManagerKt;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.components.*;
-import com.intellij.openapi.components.State;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.project.Project;
 import com.intellij.util.xmlb.XmlSerializer;
 import com.intellij.util.xmlb.XmlSerializerUtil;
-
 import dev.pnbarx.idea.treecolor.state.DefaultSettings;
 import dev.pnbarx.idea.treecolor.state.ProjectColors;
 import dev.pnbarx.idea.treecolor.state.ProjectFiles;
@@ -58,7 +56,7 @@ public class ProjectStateService implements PersistentStateComponent<ProjectStat
     @Nullable
     public static ProjectStateService getInstance(@Nullable Project project) {
         if (project == null) return null;
-        ProjectStateService instance = ServiceManager.getService(project, ProjectStateService.class);
+        ProjectStateService instance = project.getService(ProjectStateService.class);
         instance.project = project;
         return instance;
     }

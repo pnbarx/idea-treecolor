@@ -16,6 +16,7 @@
 
 package dev.pnbarx.idea.treecolor.actions;
 
+import com.intellij.openapi.actionSystem.ActionUpdateThread;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.diagnostic.Logger;
@@ -53,11 +54,13 @@ public class ClearRecursivelyAction extends AnAction {
         ProjectStateService projectStateService = ProjectStateService.getInstance(actionEvent);
         VirtualFile[] files = ActionUtils.getFiles(actionEvent);
 
-        if (projectStateService != null && projectStateService.files.isHighlightedRecursively(files)) {
-            ActionUtils.setActionEnabled(actionEvent, true);
-        } else {
-            ActionUtils.setActionEnabled(actionEvent, false);
-        }
+        boolean isActionEnabled = projectStateService != null
+                && projectStateService.files.isHighlightedRecursively(files);
+        ActionUtils.setActionEnabled(actionEvent, isActionEnabled);
     }
 
+    @Override
+    public @NotNull ActionUpdateThread getActionUpdateThread() {
+        return ActionUpdateThread.BGT;
+    }
 }

@@ -30,7 +30,7 @@ public class DefineColorsAction extends AnAction {
         super(
             "Define Colors...",
             "Define highlight colors",
-            IconLoader.getIcon("/icons/colors.svg")
+            IconLoader.getIcon("/icons/colors.svg", DefineColorsAction.class)
         );
     }
 

@@ -40,9 +40,8 @@ public class HighlightActionGroup extends ActionGroup {
         presentation.setEnabledAndVisible(isEnabled(actionEvent));
     }
 
-    @NotNull
     @Override
-    public AnAction[] getChildren(@Nullable AnActionEvent actionEvent) {
+    public AnAction @NotNull [] getChildren(@Nullable AnActionEvent actionEvent) {
         ArrayList<AnAction> actionGroupItems = new ArrayList<>();
         ProjectStateService projectStateService = ProjectStateService.getInstance(actionEvent);
 
@@ -95,4 +94,8 @@ public class HighlightActionGroup extends ActionGroup {
         return actionEvent != null && ActionUtils.getFiles(actionEvent) != null;
     }
 
+    @Override
+    public @NotNull ActionUpdateThread getActionUpdateThread() {
+        return ActionUpdateThread.BGT;
+    }
 }

@@ -26,15 +26,15 @@ import java.util.List;
 
 public class DefaultSettings {
     public static List<ColorSettings> getColorSettingsList() {
-        return new ArrayList<ColorSettings>(Arrays.asList(
-            new ColorSettings(1, new JBColor(0xde2c2c, 0x4f060d), "Color 1", true),
-            new ColorSettings(2, new JBColor(0xff6d0d, 0x44220e), "Color 2", true),
-            new ColorSettings(3, new JBColor(0xfefc22, 0x3f371b), "Color 3", true),
-            new ColorSettings(4, new JBColor(0x28ff2e, 0x162c16), "Color 4", true),
-            new ColorSettings(5, new JBColor(0x00f2ff, 0x0f2f47), "Color 5", true),
-            new ColorSettings(6, new JBColor(0x00b5ff, 0x171a34), "Color 6", true),
-            new ColorSettings(7, new JBColor(0xb892db, 0x311333), "Color 7", true),
-            new ColorSettings(8, new JBColor(0xbebebe, 0x1e1e1e), "Color 8", true)
+        return new ArrayList<>(Arrays.asList(
+                new ColorSettings(1, new JBColor(0xde2c2c, 0x4f060d), "Color 1", true),
+                new ColorSettings(2, new JBColor(0xff6d0d, 0x44220e), "Color 2", true),
+                new ColorSettings(3, new JBColor(0xfefc22, 0x3f371b), "Color 3", true),
+                new ColorSettings(4, new JBColor(0x28ff2e, 0x162c16), "Color 4", true),
+                new ColorSettings(5, new JBColor(0x00f2ff, 0x0f2f47), "Color 5", true),
+                new ColorSettings(6, new JBColor(0x00b5ff, 0x171a34), "Color 6", true),
+                new ColorSettings(7, new JBColor(0xb892db, 0x311333), "Color 7", true),
+                new ColorSettings(8, new JBColor(0xbebebe, 0x1e1e1e), "Color 8", true)
         ));
     }
 

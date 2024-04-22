@@ -16,12 +16,9 @@
 
 package dev.pnbarx.idea.treecolor.services;
 
-import com.intellij.openapi.components.PersistentStateComponent;
-import com.intellij.openapi.components.ServiceManager;
-import com.intellij.openapi.components.State;
-import com.intellij.openapi.components.Storage;
+import com.intellij.openapi.application.ApplicationManager;
+import com.intellij.openapi.components.*;
 import com.intellij.openapi.diagnostic.Logger;
-import com.intellij.util.xmlb.XmlSerializer;
 import com.intellij.util.xmlb.XmlSerializerUtil;
 import dev.pnbarx.idea.treecolor.state.beans.AppState;
 import dev.pnbarx.idea.treecolor.state.beans.ColorSettings;
@@ -40,7 +37,7 @@ public class AppStateService implements PersistentStateComponent<AppState> {
     private final AppState state = new AppState();
 
     public static AppStateService getInstance() {
-        return ServiceManager.getService(AppStateService.class);
+        return ApplicationManager.getApplication().getService(AppStateService.class);
     }
 
     @Nullable
@@ -75,15 +72,6 @@ public class AppStateService implements PersistentStateComponent<AppState> {
 
     public void setMarksForCollapsedHighlights(String marks) {
         state.marksForCollapsedHighlights = marks;
-    }
-
-    @Nullable
-    private Object cloneViaXmlSerializer(Object source) {
-        try {
-            return XmlSerializer.deserialize(XmlSerializer.serialize(source), Object.class);
-        } catch (Exception ignored) {
-            return null;
-        }
     }
 
 }

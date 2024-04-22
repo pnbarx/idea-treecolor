@@ -98,7 +98,7 @@ public class ManageSettingsDialog extends DialogWrapper {
 
     @NotNull
     @Override
-    protected Action[] createActions() {
+    protected Action @NotNull [] createActions() {
         Action okAction = getOKAction();
         okAction.putValue(Action.NAME,"Close");
         return new Action[]{

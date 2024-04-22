@@ -34,7 +34,7 @@ import java.awt.geom.Path2D;
 import java.awt.geom.RoundRectangle2D;
 
 
-public abstract class ColoredButton extends JButton {
+public abstract class  ColoredButton extends JButton {
 
     private static final Logger LOG = Logger.getInstance(ColoredButton.class);
 
@@ -77,7 +77,7 @@ public abstract class ColoredButton extends JButton {
     @Override
     public void setBackground(@Nullable Color color) {
         backgroundColor = color != null ? color : UIUtils.getDefaultTreeBackgroundColor();
-        foregroundColor = ColorUtil.isDark(backgroundColor) ? Color.WHITE : Color.BLACK;
+        foregroundColor = ColorUtil.isDark(backgroundColor) ? JBColor.WHITE : JBColor.BLACK;
     }
 
     @Override

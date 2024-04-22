@@ -76,7 +76,8 @@ public class ColorsDialog extends DialogWrapper {
         JPanel colorsPanel = new JPanel(new GridLayout(0, 4, 10, 0));
         colorSettingsComponents.clear();
         for (int i = 0; i < ProjectColors.NUMBER_OF_COLOR_PRESETS; i++) {
-            ColorSettingsComponent component = new ColorSettingsComponent(projectStateService.colors, i + 1);
+
+            ColorSettingsComponent component = new ColorSettingsComponent(projectStateService, i + 1);
             colorsPanel.add(component);
             colorSettingsComponents.add(component);
         }
@@ -104,7 +105,7 @@ public class ColorsDialog extends DialogWrapper {
 
     @NotNull
     @Override
-    protected Action[] createLeftSideActions() {
+    protected Action @NotNull [] createLeftSideActions() {
         return new Action[]{
             new AbstractAction("Manage Color Settings...") {
                 @Override

@@ -20,6 +20,7 @@ import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.Presentation;
 import com.intellij.openapi.diagnostic.Logger;
+import com.intellij.openapi.util.Key;
 import com.intellij.openapi.vfs.VirtualFile;
 import dev.pnbarx.idea.treecolor.services.ProjectStateService;
 import dev.pnbarx.idea.treecolor.utils.ActionUtils;
@@ -32,6 +33,7 @@ import javax.swing.*;
 public class HighlightAction extends AnAction {
 
     private static final Logger LOG = Logger.getInstance(HighlightAction.class);
+    private static final Key<Integer> COLOR_ID_KEY = Key.create("colorId");
 
     @SuppressWarnings({"UnusedDeclaration"}) // action must have a no-argument constructor
     public HighlightAction() {
@@ -56,7 +58,7 @@ public class HighlightAction extends AnAction {
         Presentation presentation = getTemplatePresentation();
         try {
             //noinspection ConstantConditions
-            return (int) presentation.getClientProperty("colorId");
+            return presentation.getClientProperty(COLOR_ID_KEY);
         } catch (NullPointerException e) {
             LOG.debug("colorIndex is undefined");
             return -1;
@@ -65,7 +67,6 @@ public class HighlightAction extends AnAction {
 
     public void setColorId(int colorId) {
         Presentation presentation = getTemplatePresentation();
-        presentation.putClientProperty("colorId", colorId);
+        presentation.putClientProperty(COLOR_ID_KEY, colorId);
     }
-
 }
